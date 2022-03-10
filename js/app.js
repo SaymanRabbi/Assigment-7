@@ -1,9 +1,10 @@
-let posts=[ ];
+let posts=[];
 
 const likedPostsId = [];
 const reportedPostsId = [];
 
 const getLikedPosts = () => {
+  console.log(posts)
     return posts.filter((post) => likedPostsId.includes(post.id));
 };
 
@@ -16,8 +17,10 @@ const isLiked = (id) => {
 };
 
 const addToLiked = (id) => {
-    likedPostsId.push(id); 
-    showPosts(posts);
+  likedPostsId.push(id); 
+  const remainingPosts = posts.filter((post) => !reportedPostsId.includes(post.id));
+    showPosts(remainingPosts);
+    // showPosts(posts);
 };
 
 const reportPost = (id) => {
@@ -39,13 +42,12 @@ const switchTab = (id) => {
         document.getElementById( "liked" ).style.display = "block";
         document.getElementById( "posts" ).style.display = "none";
         document.getElementById( "reported" ).style.display = "none";
-
-        displayLikedPosts();
+      displayLikedPosts();
+      // console.log(displayLikedPosts())
     } else {
         document.getElementById( "reported" ).style.display = "block";
         document.getElementById( "posts" ).style.display = "none";
         document.getElementById( "liked" ).style.display = "none";
-
         displayReportedPosts();
     }
 };
@@ -145,7 +147,8 @@ const showPosts = (posts) => {
 
 const displayLikedPosts = () => {
   const likedPosts = getLikedPosts();
-  document.getElementById( "liked" ).textContent=''
+  console.log(likedPosts)
+  document.getElementById("liked").textContent = '';
     likedPosts.forEach((post) => {
         const div = createPost(post);
         document.getElementById( "liked" ).appendChild(div);
@@ -154,15 +157,12 @@ const displayLikedPosts = () => {
 
 const displayReportedPosts = () => {
   const reportedPosts = getReportedPosts();
-  console.log(reportedPosts)
+  // console.log(reportedPosts)
   document.getElementById("reported").textContent = '';
   reportedPosts.forEach((post) => {
     const div = createPost(post);
-    console.log(div)
       document.getElementById( "reported" ).appendChild(div);
-  });
-  
-    
+  });   
 };
 
 const loadPosts = async () =>{
