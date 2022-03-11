@@ -1,8 +1,6 @@
 let posts=[];
-
 const likedPostsId = [];
 const reportedPostsId = [];
-
 const getLikedPosts = () => {
     return posts.filter((post) => likedPostsId.includes(post.id));
 };
